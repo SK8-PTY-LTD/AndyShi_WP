@@ -44,3 +44,31 @@ function sdt_remove_ver_css_js($src) {
 
 	return $src;
 }
+
+/**
+* Customizing the Login Form
+* Change the Login Logo
+* @author Jacktator
+* @see https://codex.wordpress.org/Customizing_the_Login_Form
+*/
+function customize_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(https://andy.sk8tech.io/wp-content/uploads/2018/05/temp-logo-horizontal.png);
+			height:50px;
+			width:320px;
+			background-size: 320px 50px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'customize_login_logo' );
+
+function my_login_logo_url() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'my_login_logo_url' );
+
+function my_login_logo_url_title() {
+    return 'Andi Shi';
+}
+add_filter( 'login_headertitle', 'my_login_logo_url_title' );
