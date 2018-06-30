@@ -72,3 +72,28 @@ function my_login_logo_url_title() {
     return 'Andi Shi';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
+
+add_action( 'wp_enqueue_scripts', 'remove_my_action', 100);
+function remove_my_action() {
+    if( ! is_page( 'free-market-appraisal' )) { 
+		remove_action( 'wp_footer', array( WMAMC_cf7_address_autocomplete(), 'WMAMC_cf7_gpa_plugin_script'), 21, 1 );
+	}
+}
+
+//Dequeue JavaScripts
+function project_dequeue_unnecessary_scripts() {
+    wp_dequeue_script( 'contact-form-7' );
+        wp_deregister_script( 'contact-form-7' );
+}
+//add_action( 'wp_print_scripts', 'project_dequeue_unnecessary_scripts', 100 );
+
+
+function se_inspect_scripts() {
+    global $wp_scripts;
+    echo "<h2>Enqueued JS Scripts</h2><ul>";
+    foreach( $wp_scripts->queue as $handle ) :
+        echo "<li>" . $handle . "</li>";
+    endforeach;
+    echo "</ul>";
+}
+//add_action( 'wp_print_scripts', 'se_inspect_scripts' );
